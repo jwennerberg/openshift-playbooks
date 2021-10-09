@@ -1,11 +1,11 @@
-- src: git@gitlab.pgustafs.com:pgustafs/ansible-role-ocp-project.git
+- src: git@github.com:pgustafs/ansible-role-ocp-project.git
   scm: git
   name: ocp-project
 
-- src: git@gitlab.pgustafs.com:pgustafs/ansible-role-ocp-virt.git
+- src: git@github.com:pgustafs/ansible-role-ocp-virt.git
   scm: git
   name: ocp-virt
 
-- src: git@gitlab.pgustafs.com:pgustafs/ansible-role-openshift-username-password-auth.git
+- src: git@github.com:pgustafs/ansible-role-openshift-username-password-auth.git
   scm: git
   name: ansible-role-openshift-username-password-auth
