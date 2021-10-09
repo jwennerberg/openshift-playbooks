@@ -1,0 +1,22 @@
+- name: List Pods
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - block:
+    - include_role:
+        name: ansible-role-openshift-username-password-auth
+      vars:
+        auth_action: login
+
+    - name: Get a list of all pods from any namespace
+      kubernetes.core.k8s_info:
+        api_key: "{{ api_key }}"
+        kind: Pod
+      register: pod_list
+
+    always:
+    - include_role:
+        name: ansible-role-openshift-username-password-auth
+      vars:
+        auth_action: logout
