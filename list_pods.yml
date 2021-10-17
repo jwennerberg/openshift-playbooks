@@ -14,7 +14,7 @@
         api_key: "{{ api_key }}"
         kind: Pod
       register: pod_list
-
+    # test
     always:
     - include_role:
         name: ansible-role-openshift-username-password-auth
