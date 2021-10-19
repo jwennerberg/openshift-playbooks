@@ -1,0 +1,27 @@
+- name: Create project
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    project_name: "ansible_testing_project"
+  
+  tasks:
+  - block:
+    - name: "Include role ansible-role-openshift-username-password-auth"
+      include_role:
+        name: ansible-role-openshift-username-password-auth
+      vars:
+        auth_action: login
+
+    - name: "Include role ansible-role-openshift-namespace"
+      include_role:
+        name: ansible-role-openshift-namespace
+      vars:
+        openshift_namespace_name: "{{ project_name }}"
+
+    always:
+    - name: "Include role ansible-role-openshift-username-password-auth"
+      include_role:
+        name: ansible-role-openshift-username-password-auth
+      vars:
+        auth_action: logout
