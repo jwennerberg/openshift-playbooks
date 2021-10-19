@@ -4,7 +4,8 @@
   gather_facts: false
   tasks:
   - block:
-    - include_role:
+    - name: "Include role ansible-role-openshift-username-password-auth"
+      include_role:
         name: ansible-role-openshift-username-password-auth
       vars:
         auth_action: login
@@ -14,9 +15,10 @@
         api_key: "{{ api_key }}"
         kind: Pod
       register: pod_list
-    # test
+
     always:
-    - include_role:
+    - name: "Include role ansible-role-openshift-username-password-auth"
+      include_role:
         name: ansible-role-openshift-username-password-auth
       vars:
         auth_action: logout
