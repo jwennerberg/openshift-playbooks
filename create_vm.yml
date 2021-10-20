@@ -19,6 +19,13 @@
       vars:
         openshift_namespace_name: "{{ project_name }}"
 
+    - name: "Include role ansible-role-openshift-networkbridge"
+      include_role:
+        name: ansible-role-openshift-networkbridge
+      vars:
+        openshift_networkbridge_namespace: "{{ project_name }}"
+        openshift_networkbridge_bridge_interface: "{{ bridge_name }}"
+
     always:
     - name: "Include role ansible-role-openshift-username-password-auth"
       include_role:
