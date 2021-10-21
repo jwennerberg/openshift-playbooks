@@ -27,7 +27,11 @@
         openshift_networkbridge_namespace: "{{ project_name }}"
         openshift_networkbridge_bridge_interface: "{{ bridge_name }}"
 
-    - name: "Include role openshift_networkbridge"
+    - name: some debug
+      ansible.builtin.command:
+        cmd: pip list
+
+    - name: "Include role openshift_vm"
       include_role:
         name: openshift_vm
       vars:
