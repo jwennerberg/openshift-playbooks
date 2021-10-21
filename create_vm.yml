@@ -14,9 +14,9 @@
       vars:
         auth_action: login
 
-    - name: "Include role openshift-namespace"
+    - name: "Include role openshift_namespace"
       include_role:
-        name: openshift-namespace
+        name: openshift_namespace
       vars:
         openshift_namespace_name: "{{ project_name }}"
 
