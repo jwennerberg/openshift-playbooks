@@ -29,7 +29,7 @@
 
     - name: some debug
       ansible.builtin.command:
-        cmd: pip list
+        cmd: python -m pip list
 
     - name: "Include role openshift_vm"
       include_role:
