@@ -27,6 +27,11 @@
         openshift_networkbridge_namespace: "{{ project_name }}"
         openshift_networkbridge_bridge_interface: "{{ bridge_name }}"
 
+    - name: "Include role openshift_networkbridge"
+      include_role:
+        name: openshift_vm
+      vars:
+
     always:
     - name: "Include role openshift_username_password_auth"
       include_role:
