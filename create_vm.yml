@@ -27,9 +27,9 @@
         openshift_networkbridge_namespace: "{{ project_name }}"
         openshift_networkbridge_bridge_interface: "{{ bridge_name }}"
 
-    - name: some debug
-      ansible.builtin.command:
-        cmd: python -m pip list
+    - name: Install openshift python package
+      ansible.builtin.pip:
+        name: openshift
 
     - name: "Include role openshift_vm"
       include_role:
