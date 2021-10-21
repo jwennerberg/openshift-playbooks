@@ -4,31 +4,32 @@
   gather_facts: false
   vars:
     project_name: "ansible_testing_project"
-  
+    bridge_name: "br1"
+
   tasks:
   - block:
-    - name: "Include role ansible-role-openshift-username-password-auth"
+    - name: "Include role openshift_username_password_auth"
       include_role:
-        name: ansible-role-openshift-username-password-auth
+        name: openshift_username_password_auth
       vars:
         auth_action: login
 
-    - name: "Include role ansible-role-openshift-namespace"
+    - name: "Include role openshift-namespace"
       include_role:
-        name: ansible-role-openshift-namespace
+        name: openshift-namespace
       vars:
         openshift_namespace_name: "{{ project_name }}"
 
-    - name: "Include role ansible-role-openshift-networkbridge"
+    - name: "Include role openshift_networkbridge"
       include_role:
-        name: ansible-role-openshift-networkbridge
+        name: openshift_networkbridge
       vars:
         openshift_networkbridge_namespace: "{{ project_name }}"
         openshift_networkbridge_bridge_interface: "{{ bridge_name }}"
 
     always:
-    - name: "Include role ansible-role-openshift-username-password-auth"
+    - name: "Include role openshift_username_password_auth"
       include_role:
-        name: ansible-role-openshift-username-password-auth
+        name: openshift_username_password_auth
       vars:
         auth_action: logout

@@ -1,11 +1,15 @@
 - src: git@github.com:pgustafs/ansible-role-openshift-networkbridge.git
   scm: git
-  name: ansible-role-openshift-networkbridge
+  name: openshift_networkbridge
   
 - src: git@github.com:pgustafs/ansible-role-openshift-namespace.git
   scm: git
-  name: ansible-role-openshift-namespace
+  name: openshift_namespace
 
 - src: git@github.com:pgustafs/ansible-role-openshift-username-password-auth.git
   scm: git
-  name: ansible-role-openshift-username-password-auth
+  name: openshift_username_password_auth
+
+- src: git@github.com:pgustafs/ansible-role-openshift-vm.git
+  scm: git
+  name: openshift_vm
