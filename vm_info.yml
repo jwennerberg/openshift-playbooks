@@ -22,6 +22,9 @@
           - "vm.kubevirt.io/name = {{ vm_name }}"
         namespace: "{{ vm_namespace }}"
       register: vm_info
+      until: vm_info.resources[0].status.hostIP is defined
+      retries: 10
+      delay: 1
 
     - name: Print vm_info
       ansible.builtin.debug:
