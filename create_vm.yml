@@ -5,6 +5,8 @@
   vars:
     project_name: "ansible_testing_project"
     bridge_name: "br1"
+    vm_name: "test"
+    template_name: 
 
   tasks:
   - block:
@@ -27,14 +29,13 @@
         openshift_networkbridge_namespace: "{{ project_name }}"
         openshift_networkbridge_bridge_interface: "{{ bridge_name }}"
 
-    - name: Install openshift python package
-      ansible.builtin.command:
-        cmd: python -m pip list
-
     - name: "Include role openshift_vm"
       include_role:
         name: openshift_vm
       vars:
+        openshift_vm_name: "{{ vm_name }}"
+        openshift_vm_namespace: "{{ project_name }}"
+        openshift_vm_source_pvc_name:
 
     always:
     - name: "Include role openshift_username_password_auth"
