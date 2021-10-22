@@ -17,8 +17,9 @@
     - name: " get information about virtual machine {{ vm_name }}"
       kubernetes.core.k8s_info:
         api_key: "{{ api_key }}"
-        kind: VirtualMachine
-        name: "{{ vm_name }}"
+        kind: Pod
+        label_selectors:
+          - "vm.kubevirt.io/name = {{ vm_name }}"
         namespace: "{{ vm_namespace }}"
       register: vm_info
 
