@@ -27,6 +27,16 @@
       ansible.builtin.debug:
         var: vm_info
 
+    - name: Set variable storing bridge IP address
+      set_fact:
+        vm_bridge_ip_address: "{{ vm_info | json_query(query) }}"
+      vars:
+        query: "resources[].status.hostIP"
+  
+  - name: Display bridge IP address
+    debug:
+      msg: "{{ vm_bridge_ip_address }}"
+
     always:
     - name: "Include role openshift_username_password_auth"
       include_role:
