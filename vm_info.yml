@@ -25,7 +25,7 @@
 
     - name: Print vm_info
       ansible.builtin.debug:
-        var: vm_info.resources[].status
+        var: vm_info.resources[0].status
 
     - name: Set variable storing bridge IP address
       set_fact:
