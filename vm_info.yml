@@ -1,0 +1,34 @@
+- name: List Pods
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    vm_name:
+    vm_namespace:
+
+  tasks:
+  - block:
+    - name: "Include role openshift_username_password_auth"
+      include_role:
+        name: openshift_username_password_auth
+      vars:
+        auth_action: login
+
+    - name: " get information about virtual machine {{ vm_name }}"
+      kubernetes.core.k8s_info:
+        api_key: "{{ api_key }}"
+        kind: VirtualMachine
+        name: "{{ vm_name }}"
+        namespace: "{{ vm_namespace }}"
+      register: vm_info
+
+    - name: Print vm_info
+      ansible.builtin.debug:
+        var: vm_info
+
+    always:
+    - name: "Include role openshift_username_password_auth"
+      include_role:
+        name: openshift_username_password_auth
+      vars:
+        auth_action: logout
