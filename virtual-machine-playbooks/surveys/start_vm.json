@@ -1,6 +1,6 @@
 {
     "name": "Start VM Survey",
-    "description": "Survey for start_vm",
+    "description": "Survey for start_vm.yml",
     "spec": [
         {
         "type": "text",

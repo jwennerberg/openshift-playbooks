@@ -64,8 +64,7 @@
       state: "present"
       survey_enabled: yes
       survey_spec: "{{ lookup('file', 'virtual-machine-playbooks/surveys/' + item + '.json') }}"
-    loop:
-      - start_vm
+    loop: "{{ lookup('file', 'virtual-machine-playbooks/add_to_controler.txt').splitlines() }}"
 
 
   #- name: "Syncing project {{ project_name }}"
