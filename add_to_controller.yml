@@ -1,0 +1,74 @@
+---
+# PRE-REQS:
+# - Ansible Galaxy/Automation Hub API Token Credential for Automation Hub
+# - OpenShift Credential
+- name: Create Job templates and dependencies for all palybooks in this repository in Controller
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    automation_hub_credential: "Automation Hub Credential"
+    organization_name: "OpenShift"
+    project_name: "OpenShift Playbooks Project - Github"
+    inventory_name: "OpenShift Inventory"
+    openshift_credential_name: "OpenShift Credential - ocp.pgustafs.com"
+
+  tasks:
+  - name: "Create organization {{ organization_name }} that pulls content from galaxy.ansible.com and Automation Hub"
+    ansible.controller.organization:
+      name: "{{ organization_name }}"
+      state: present
+      default_environment: "Default execution environment"
+      galaxy_credentials:
+        - Ansible Galaxy
+        - "{{ automation_hub_credential }}"
+
+  - name: "Create project - {{ project_name }}"
+    ansible.controller.project:
+      name: "{{ project_name }}"
+      organization: "{{ organization_name }}"
+      state: present
+      scm_type: git
+      scm_url: "https://github.com/pgustafs/openshift-playbooks.git"
+      scm_branch: master
+      scm_clean: yes
+      scm_update_on_launch: no
+
+  - name: "Sync project {{ project_name }}"
+    ansible.controller.project_update:
+      project: "{{ project_name }}"
+      wait: true
+
+  - name: "Add inventory {{ inventory_name }}"
+    ansible.controller.inventory:
+      name: "{{ inventory_name }}"
+      organization: "{{ organization_name }}"
+      state: present
+
+  - name: "Add localhost to {{ inventory_name }}"
+    ansible.controller.host:
+      name: localhost
+      inventory: "{{ inventory_name }}"
+      state: present
+
+  - name: "Add job templates"
+    ansible.controller.job_template:
+      name: "{{ item | replace('_',' ') }}"
+      job_type: run
+      organization: "{{ organization_name }}"
+      inventory: "{{ inventory_name }}"
+      project: "{{ project_name }}"
+      playbook: "virtual-machine-playbooks/{{ item }}.yml"
+      credentials:
+        - "{{ openshift_credential_name }}"
+      state: "present"
+      survey_enabled: yes
+      survey_spec: "{{ lookup('file', 'virtual-machine-playbooks/surveys/' + item + '.json') }}"
+    loop:
+      - start_vm
+
+
+  #- name: "Syncing project {{ project_name }}"
+  #  ansible.controller.project_update:
+  #    project: "{{ project_name }}"
+  #    wait: False
