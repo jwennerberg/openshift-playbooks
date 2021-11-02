@@ -3,7 +3,7 @@
   connection: local
   gather_facts: false
   vars:
-    project_name: "ansible_testing_project"
+    project_name:
   
   tasks:
   - block:

@@ -1,7 +1,10 @@
-- name: List Pods
+- name: Start all virtual machines in a namespace
   hosts: localhost
   connection: local
   gather_facts: false
+  vars:
+    project_name:
+
   tasks:
   - block:
     - name: "Include role openshift_username_password_auth"
@@ -10,11 +13,12 @@
       vars:
         auth_action: login
 
-    - name: Get a list of all pods from any namespace
-      kubernetes.core.k8s_info:
-        api_key: "{{ api_key }}"
-        kind: Pod
-      register: pod_list
+    - name: "Include role openshift_vm"
+      include_role:
+        name: openshift_vm
+      vars:
+        openshift_vm_action: start_all
+        openshift_vm_namespace: "{{ project_name }}"
 
     always:
     - name: "Include role openshift_username_password_auth"

@@ -1,0 +1,52 @@
+- name: Sample playbook showing how you can work with the data from k8s_info module
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - block:
+    - name: "Include role openshift_username_password_auth"
+      include_role:
+        name: openshift_username_password_auth
+      vars:
+        auth_action: login
+
+    - name: Get a list of all virtual machines from any namespace
+      kubernetes.core.k8s_info:
+        api_key: "{{ api_key }}"
+        kind: VirtualMachine
+      register: vm_list
+
+    - name: Select only vm name and namespace from the big list of data
+      ansible.builtin.set_fact:
+        #msg: "{{ vm_list.resources | map(attribute='metadata.name') | list }}"
+        vms: "{{ vm_list | json_query(query) }}"
+      vars:
+        query: "resources[*].metadata.{name: name, namespace: namespace}"
+
+    - name: Display the vms variable
+      ansible.builtin.debug:
+        var: vms
+
+    - name: Of what type is the vms variable? 
+      ansible.builtin.debug:
+        msg: 
+          - "var type: {{ vms | type_debug }}"
+
+    - name: The variable vms is a list, but of what type is the elemts in the list? 
+      ansible.builtin.debug:
+        msg:
+          - "var type: {{ vms[0] | type_debug }}"
+
+    - name: Iterate over the list of dicts to see in what namespace each vm lives
+      ansible.builtin.debug:
+        msg:
+          - "vm: {{ item.name }} lives in namespace: {{ item.namespace }}"
+      loop:
+        "{{ vms }}"
+
+    always:
+    - name: "Include role openshift_username_password_auth"
+      include_role:
+        name: openshift_username_password_auth
+      vars:
+        auth_action: logout

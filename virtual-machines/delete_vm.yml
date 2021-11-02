@@ -1,12 +1,10 @@
-- name: Create project
+- name: Delete virtual machine
   hosts: localhost
   connection: local
   gather_facts: false
   vars:
-    project_name: "ansible_testing_project"
-    bridge_name: "br1"
     vm_name:
-    template_name: 
+    project_name:
 
   tasks:
   - block:
@@ -16,26 +14,13 @@
       vars:
         auth_action: login
 
-    - name: "Include role openshift_namespace"
-      include_role:
-        name: openshift_namespace
-      vars:
-        openshift_namespace_name: "{{ project_name }}"
-
-    - name: "Include role openshift_networkbridge"
-      include_role:
-        name: openshift_networkbridge
-      vars:
-        openshift_networkbridge_namespace: "{{ project_name }}"
-        openshift_networkbridge_bridge_interface: "{{ bridge_name }}"
-
     - name: "Include role openshift_vm"
       include_role:
         name: openshift_vm
       vars:
+        openshift_vm_action: delete
         openshift_vm_name: "{{ vm_name }}"
         openshift_vm_namespace: "{{ project_name }}"
-        openshift_vm_source_pvc_name:
 
     always:
     - name: "Include role openshift_username_password_auth"

@@ -1,10 +1,11 @@
-- name: Delete project
+- name: Start virtual machine
   hosts: localhost
   connection: local
   gather_facts: false
   vars:
+    vm_name:
     project_name:
-    
+
   tasks:
   - block:
     - name: "Include role openshift_username_password_auth"
@@ -13,12 +14,13 @@
       vars:
         auth_action: login
 
-    - name: "Include role openshift_namespace"
+    - name: "Include role openshift_vm"
       include_role:
-        name: openshift_namespace
+        name: openshift_vm
       vars:
-        openshift_namespace_name: "{{ project_name }}"
-        openshift_namespace_state: "absent"
+        openshift_vm_action: start
+        openshift_vm_name: "{{ vm_name }}"
+        openshift_vm_namespace: "{{ project_name }}"
 
     always:
     - name: "Include role openshift_username_password_auth"

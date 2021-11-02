@@ -1,10 +1,9 @@
-- name: Delete project
+- name: Stop all virtual machines in the cluster
   hosts: localhost
   connection: local
   gather_facts: false
   vars:
-    project_name:
-    
+
   tasks:
   - block:
     - name: "Include role openshift_username_password_auth"
@@ -13,12 +12,11 @@
       vars:
         auth_action: login
 
-    - name: "Include role openshift_namespace"
+    - name: "Include role openshift_vm"
       include_role:
-        name: openshift_namespace
+        name: openshift_vm
       vars:
-        openshift_namespace_name: "{{ project_name }}"
-        openshift_namespace_state: "absent"
+        openshift_vm_action: stop_all
 
     always:
     - name: "Include role openshift_username_password_auth"

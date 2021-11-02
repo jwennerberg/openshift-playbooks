@@ -3,3 +3,5 @@ collections:
 #  version: 2.2.0
 # Community general is needed for json_query filter
 - name: community.general
+- name: redhat.openshift
+- name: kubernetes.core
