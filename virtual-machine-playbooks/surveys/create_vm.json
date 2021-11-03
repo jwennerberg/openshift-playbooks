@@ -1,0 +1,40 @@
+{
+    "name": "Create VM Survey",
+    "description": "Survey for create_vm.yml",
+    "spec": [
+        {
+        "type": "text",
+        "question_name": "vm name",
+        "question_description": "Name of the virtual machine to create?",
+        "variable": "vm_name",
+        "required": true,
+        "default": "example_vm"
+        },
+        {
+        "type": "text",
+        "question_name": "project name",
+        "question_description": "Name of the project in OpenShift where the virtual machine should live?",
+        "variable": "project_name",
+        "required": true,
+        "default": "example_project"
+        },
+        {
+        "type": "multiplechoice",
+        "question_name": "vm size",
+        "question_description": "The size of the virtual machine?",
+        "variable": "size",
+        "choices": ["small", "medium", "large", "x-large"],
+        "required": true,
+        "default": "small"
+        },
+        {
+        "type": "multiplechoice",
+        "question_name": "public ip address",
+        "question_description": "Add network bridge to the virtual machine?",
+        "variable": "bridge",
+        "choices": [true, false],
+        "required": true,
+        "default": false
+        }
+    ]
+}

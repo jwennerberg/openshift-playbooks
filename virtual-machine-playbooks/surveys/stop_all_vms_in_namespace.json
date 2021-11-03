@@ -1,0 +1,14 @@
+{
+    "name": "Stop all VMs in namespace Survey",
+    "description": "Survey for stop_all_vms_in_namespace.yml",
+    "spec": [
+        {
+        "type": "text",
+        "question_name": "project name",
+        "question_description": "Name of the project in OpenShift where the virtual machine lives?",
+        "variable": "project_name",
+        "required": true,
+        "default": "example_project"
+        }
+    ]
+}

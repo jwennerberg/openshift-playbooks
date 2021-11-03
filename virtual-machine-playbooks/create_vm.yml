@@ -6,7 +6,8 @@
     vm_name:
     template_name:
     project_name:
-    bridge: true
+    size:
+    bridge:
     bridge_name:
 
   tasks:
@@ -37,6 +38,7 @@
         openshift_vm_action: create
         openshift_vm_name: "{{ vm_name }}"
         openshift_vm_namespace: "{{ project_name }}"
+        openshift_vm_size: "{{ size }}"
         openshift_vm_source_pvc_name:
 
     - name: Print vm bridge ipv4 address

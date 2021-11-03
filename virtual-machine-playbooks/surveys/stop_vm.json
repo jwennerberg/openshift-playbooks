@@ -1,0 +1,22 @@
+{
+    "name": "Stop VM Survey",
+    "description": "Survey for stop_vm.yml",
+    "spec": [
+        {
+        "type": "text",
+        "question_name": "vm name",
+        "question_description": "Name of the virtual machine to stop?",
+        "variable": "vm_name",
+        "required": true,
+        "default": "example_vm"
+        },
+        {
+        "type": "text",
+        "question_name": "project name",
+        "question_description": "Name of the project in OpenShift where the virtual machine lives?",
+        "variable": "project_name",
+        "required": true,
+        "default": "example_project"
+        }
+    ]
+}

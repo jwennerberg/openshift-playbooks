@@ -1,1 +1,5 @@
 start_vm
+stop_vm
+delete_vm
+stop_all_vms_in_namespace
+start_all_vms_in_namespace
