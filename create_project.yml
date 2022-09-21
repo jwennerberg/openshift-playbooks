@@ -3,25 +3,26 @@
   connection: local
   gather_facts: false
   vars:
-    project_name:
-  
+    project_name: foo
+
   tasks:
-  - block:
-    - name: "Include role openshift_username_password_auth"
-      include_role:
-        name: openshift_username_password_auth
-      vars:
-        auth_action: login
+    - name: "Block to to do whatevs"
+      block:
+        - name: "Include role openshift_username_password_auth"
+          ansible.builtin.include_role:
+            name: openshift_username_password_auth
+          vars:
+            auth_action: login
 
-    - name: "Include role openshift_namespace"
-      include_role:
-        name: openshift_namespace
-      vars:
-        openshift_namespace_name: "{{ project_name }}"
+        - name: "Include role openshift_namespace"
+          ansible.builtin.include_role:
+            name: openshift_namespace
+          vars:
+            openshift_namespace_name: "{{ project_name }}"
 
-    always:
-    - name: "Include role openshift_username_password_auth"
-      include_role:
-        name: openshift_username_password_auth
-      vars:
-        auth_action: logout
+      always:
+        - name: "Include role openshift_username_password_auth"
+          ansible.builtin.include_role:
+            name: openshift_username_password_auth
+          vars:
+            auth_action: logout
